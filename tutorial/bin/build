@@ -1,1 +1,9 @@
 #!/usr/bin/env bash
+
+docker create -v /libs --name cpplibs pcrespov/cppenv /bin/true
+
+docker run --rm -ti --volumes-from cpplibs \
+-v $(pwd):/src:ro \
+-v /tmp/build:/build \
+pcrespov/cppenv \
+/bin/bash -c "cmake -DCMAKE_INSTALL_PREFIX:PATH=/libs /src && make all"

@@ -1,19 +1,37 @@
 # https://cmake.org/cmake-tutorial
+cmake_minimum_required(VERSION 2.6)
+project(tutorial)
 
-CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
-PROJECT(tutorial)
+set(MAJOR_VERSION 1)
+set(MINOR_VERSION 0)
 
-SET(MAJOR_VERSION 1)
-SET(MINOR_VERSION 0)
-
-MESSAGE(STATUS ${PROJECT_SOURCE_DIR} )
-MESSAGE(STATUS ${PROJECT_BINARY_DIR} )
-
-CONFIGURE_FILE(
-${PROJECT_SOURCE_DIR}/tutorial_config.h.in
-${PROJECT_BINARY_DIR}/tutorial_config.h
+# OPTIONS
+option(USE_MYMATH
+  "Uses my own math functions"
+  ON
 )
 
-INCLUDE_DIRECTORIES( "${PROJECT_BINARY_DIR}")
+message(STATUS ${PROJECT_SOURCE_DIR} )
+message(STATUS ${PROJECT_BINARY_DIR} )
 
-ADD_EXECUTABLE(tutorial tutorial.cxx)
+if (USE_MYMATH)
+  add_subdirectory(MathFunctions)
+
+  include_directories("${CMAKE_CURRENT_SOURCE_DIR}/MathFunctions")
+  # accumulats in variable, all dependencies
+  set(EXTERNAL_DEPENDENCY_LIBS ${EXTERNAL_DEPENDENCY_LIBS} Mathfuntions)
+endif (USE_MYMATH)
+
+# Replaces
+configure_file(
+  ${PROJECT_SOURCE_DIR}/tutorial_config.h.in
+  ${PROJECT_BINARY_DIR}/tutorial_config.h
+)
+include_directories( "${PROJECT_BINARY_DIR}")
+
+# configures executable
+set(MY_TARGET_NAME tutorial)
+
+file(GLOB SOURCE_FILES *.cxx)
+add_executable(${MY_TARGET_NAME} ${SOURCE_FILES})
+target_link_libraries(${MY_TARGET_NAME} ${EXTERNAL_DEPENDENCY_LIBS})

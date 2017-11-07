@@ -4,6 +4,10 @@
 
 #include "tutorial_config.h"
 
+#ifdef USE_MYMATH
+#include "mysqrt.h"
+#endif
+
 int main(int argc, char* argv[])
 {
   if (argc < 2) {
@@ -13,7 +17,14 @@ int main(int argc, char* argv[])
   }
 
   const double input = std::atof(argv[1]);
-  const double output = std::sqrt( input );
+
+
+  #ifdef USE_MYMATH
+    const double output = mysqrt( input );
+  #else
+    const double output = std::sqrt( input );
+  #endif
+
   std::cout << " The quare root of " << input << " is " << output << "\n";
   return 0;
 }

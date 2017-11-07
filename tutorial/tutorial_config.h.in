@@ -1,2 +1,6 @@
 #define MAJOR_VERSION @MAJOR_VERSION@
 #define MINOR_VERSION @MINOR_VERSION@
+
+
+// converts cmake's  option USE_MYMATH into a preprocessor variable
+#cmakedefine USE_MYMATH

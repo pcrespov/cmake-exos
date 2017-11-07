@@ -14,20 +14,20 @@ option(USE_MYMATH
 message(STATUS ${PROJECT_SOURCE_DIR} )
 message(STATUS ${PROJECT_BINARY_DIR} )
 
-if (USE_MYMATH)
-  add_subdirectory(MathFunctions)
-
-  include_directories("${CMAKE_CURRENT_SOURCE_DIR}/MathFunctions")
-  # accumulats in variable, all dependencies
-  set(EXTERNAL_DEPENDENCY_LIBS ${EXTERNAL_DEPENDENCY_LIBS} Mathfuntions)
-endif (USE_MYMATH)
-
 # Replaces
 configure_file(
   ${PROJECT_SOURCE_DIR}/tutorial_config.h.in
   ${PROJECT_BINARY_DIR}/tutorial_config.h
 )
+
 include_directories( "${PROJECT_BINARY_DIR}")
+
+if (USE_MYMATH)
+  add_subdirectory(MathFunctions)
+  include_directories("${CMAKE_CURRENT_SOURCE_DIR}/MathFunctions")
+  # accumulats in variable, all dependencies
+  set(EXTERNAL_DEPENDENCY_LIBS ${EXTERNAL_DEPENDENCY_LIBS} MathFuntions)
+endif (USE_MYMATH)
 
 # configures executable
 set(MY_TARGET_NAME tutorial)

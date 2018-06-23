@@ -29,6 +29,8 @@ Useful references:
  - Official Doc: https://docs.docker.com/engine/userguide/eng-image/multistage-build/
  - Multi-stage build with C++: https://imantabrizian.me/blog/docker-multistage-builds/
  - Builder pattern vs multi-stage build: https://blog.alexellis.io/mutli-stage-docker-builds/
- -
+
 
  ~~ISSUE 1~~ : the last command does not run. tutorial must lack some library?==>c++ binaries built in ubuntu might not run in alpine. See [holly build box](https://github.com/phusion/holy-build-box). Solved creating an multistage-build that build  the code and deploys binaries using alpine.
+ 
+ 
